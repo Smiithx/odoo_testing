@@ -5,7 +5,7 @@ import logging
 from odoo import fields, models, api
 
 logger = logging.getLogger(__name__)
-
+from odoo.exceptions import UserError
 
 class Presupuesto(models.Model):
     _name = "presupuesto"
@@ -16,13 +16,14 @@ class Presupuesto(models.Model):
     fch_estreno = fields.Date(string="Fecha estreno")
     clasificacion = fields.Selection(selection=[
         ("G", "G"),  # publico general
-        ("PG", "PG"),  # Se requiere la compañia de un adulto
+        ("PG", "PG"),  # Se recomienda la compañia de un adulto
         ("PG-13", "PG-13"),  # Mayores de 13
         ("R", "R"),  # En compañia de un adulto obligatorio
         ("NC-17", "NC-17"),  # Mayores de 18
     ],
         string="Clasificación"
     )
+    des_clasificacion = fields.Char(string="Descripcion clasificacion")
     puntuacion = fields.Integer(string="Puntuación", related="puntuacion2")
     puntuacion2 = fields.Integer(string="Puntuación 2")
     active = fields.Boolean(string="Activo", default=True)
@@ -67,8 +68,39 @@ class Presupuesto(models.Model):
 
     def unlink(self):
         logger.info('****************** Se disparo la funcion unlink')
-        if self.state == 'cancelado':
-            super(Presupuesto,self).unlink()
-        else:
-            logger.info('****************** No se puede eliminar el registro porque no se encuenta en el estado cancelado.')
+        if self.state != 'cancelado':
+            raise UserError('No se puede eliminar el registro porque no se encuenta en el estado cancelado.')
+        super(Presupuesto,self).unlink()
 
+    @api.model
+    def create(self, variables):
+        logger.debug('****************** variables: {0}'.format(variables))
+        return super(Presupuesto, self).create(variables)
+
+    def write(self, variables):
+        logger.debug('****************** variables: {0}'.format(variables))
+        if 'clasificacion' in variables:
+            raise UserError('La clasificacion no se puede editar!')
+        return super(Presupuesto, self).write(variables)
+
+    def copy(self, default=None):
+        default = dict(default or {})
+        default['name'] = self.name + ' (copia)'
+        default['puntuacion2'] = 1
+        return super(Presupuesto,self).copy(default)
+
+    @api.onchange('clasificacion')
+    def _onchange_clasificacion(self):
+        if self.clasificacion:
+            if self.clasificacion == 'G':
+                self.des_clasificacion = 'publico general'
+            if self.clasificacion == 'PG':
+                self.des_clasificacion = 'Se recomienda la compañia de un adulto'
+            if self.clasificacion == 'PG-13':
+                self.des_clasificacion = 'Mayores de 13'
+            if self.clasificacion == 'R':
+                self.des_clasificacion = 'En compañia de un adulto obligatorio'
+            if self.clasificacion == 'NC-17':
+                self.des_clasificacion = 'Mayores de 18'
+        else:
+            self.des_clasificacion = False

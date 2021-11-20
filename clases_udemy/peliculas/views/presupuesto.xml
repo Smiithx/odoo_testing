@@ -14,6 +14,11 @@
                     <button string="Cancelar" type="object" name="cancelar_presupuesto" states="borrador,aprobado"/>
                     <field name="state" widget="statusbar" statusbar_visible="borrador,aprobado"/>
                 </header>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;"
+                     attrs="{'invisible': [('des_clasificacion','=',False)]}"
+                >
+                    <field name="des_clasificacion" readonly="1" force_save="1"></field>
+                </div>
                 <sheet>
                     <widget name="web_ribbon" title="Archivado" bg_color="bg-danger"
                             attrs="{'invisible': [('active','=',True)]}"/>
@@ -39,7 +44,7 @@
                         </div>
                         <div class="o_row" style="display:flex;">
                             <field name="clasificacion" required="1"/>
-                            <span class="fa fa-circle" attrs="{'invisible': [
+                            <span title="" class="fa fa-circle" attrs="{'invisible': [
                             ('clasificacion','=',False),
                             ('fch_estreno','=',False)
                             ]}"

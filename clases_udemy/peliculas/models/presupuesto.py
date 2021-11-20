@@ -31,12 +31,19 @@ class Presupuesto(models.Model):
         comodel_name="res.partner",
         string="Director"
     )
+    actor_ids = fields.Many2many(
+        comodel_name="res.partner",
+        string="Actores"
+    )
     categoria_director_id = fields.Many2one(
         comodel_name="res.partner.category",
         string="Categoria Director",
         default=lambda self: self.env.ref('peliculas.category_director')
-        # Primera version
-        # default=lambda self: self.env['res.partner.category'].search([('name', '=', 'Director')])
+    )
+    categoria_actor_id = fields.Many2one(
+        comodel_name="res.partner.category",
+        string="Categoria Actor",
+        default=lambda self: self.env.ref('peliculas.category_actor')
     )
     genero_ids = fields.Many2many(
         comodel_name="genero",
@@ -58,7 +65,9 @@ class Presupuesto(models.Model):
         copy=False
     )
     fch_aprobado = fields.Datetime(string='Fecha aprobado',copy=False)
+    fch_creacion = fields.Datetime(string='Fecha creación',copy=False, default = lambda self: fields.Datetime.now())
     num_presupuesto = fields.Char(string="Numero presupuesto",copy=False)
+    opinion = fields.Html(string="Opinion")
 
     def aprobar_presupuesto(self):
         logger.info('****************** Entro a la funcion Aprobar presupuesto')

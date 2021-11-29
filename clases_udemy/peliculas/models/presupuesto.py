@@ -11,6 +11,17 @@ from odoo.exceptions import UserError
 class Presupuesto(models.Model):
     _name = "presupuesto"
     _inherit = ["image.mixin"]
+
+    @api.depends('detalle_ids')
+    def _compute_total(self):
+        for record in self:
+            sub_total = 0
+            for linea in record.detalle_ids:
+                sub_total += linea.importe
+            record.base = sub_total
+            record.impuestos = sub_total * 0.18
+            record.total = sub_total * 1.18
+
     name = fields.Char(
         string="Pelicula"
     )
@@ -82,6 +93,11 @@ class Presupuesto(models.Model):
         string='Moneda',
         default=lambda self: self.env.company.currency_id.id,
     )
+
+    terminos = fields.Text(string='Terminos')
+    base = fields.Monetary(string='Base imponible', compute='_compute_total')
+    impuestos = fields.Monetary(string='Impuestos', compute='_compute_total')
+    total = fields.Monetary(string='Total', compute='_compute_total')
 
     def aprobar_presupuesto(self):
         logger.info('****************** Entro a la funcion Aprobar presupuesto')

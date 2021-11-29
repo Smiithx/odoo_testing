@@ -102,6 +102,22 @@
                                     <field name="currency_id" invisible="1"/>
                                 </tree>
                             </field>
+                            <group col="6" class="mt-2 mt-md-0">
+                                <group colspan="4">
+                                    <field name="terminos" nolabel="1" placeholder="Terminos y condiciones..."/>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="base" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                                    <field name="impuestos"/>
+                                    <div class="oe_subtotal_footer_separator oe_line_o_td_label" >
+                                        <label for="total"/>
+                                    </div>
+                                    <field name="total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"
+                                        options="{'currency_field':'currency_id'}"
+                                    />
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
                         </page>
                         <page string="Otra informacion">
                             <group>
@@ -117,6 +133,28 @@
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+    <record id="view_presupuesto_tree" model="ir.ui.view">
+        <field name="name">Vista lista de presupuesto</field>
+        <field name="model">presupuesto</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="state == 'cancelado'"
+                decoration-success="state == 'aprobado'"
+            >
+                <field name="name"/>
+                <field name="num_presupuesto"/>
+                <field name="fch_creacion"/>
+                <field name="total" sum="importe_total"/>
+                <field name="state" widget="badge" decoration-danger="state == 'cancelado'"
+                decoration-success="state == 'aprobado'"/>
+            </tree>
+            <!-- decoration-bf: negrita -->
+            <!-- decoration-it: cursiva -->
+            <!-- decoration-danger: color rojo -->
+            <!-- decoration-info: color azul claro -->
+            <!-- decoration-success: color gris claro -->
+            <!-- decoration-warning: color mostaza -->
         </field>
     </record>
 </odoo>

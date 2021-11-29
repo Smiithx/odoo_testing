@@ -90,14 +90,15 @@
                             <field name="detalle_ids">
                                 <tree editable="bottom">
                                     <control>
-                                        <create name="add_product_control" string="Agregar recurso cinematografico" />
+                                        <create name="add_product_control" string="Agregar recurso cinematografico"/>
                                     </control>
                                     <field name="imagen" widget="image" options="{'size': [80,50]}" optional="show"/>
-                                    <field name="name" />
+                                    <field name="name"/>
                                     <field name="descripcion" optional="show"/>
-                                    <field name="contacto_id" attrs="{'column_invisible': [('parent.campos_ocultos','=',False)]}" />
-                                    <field name="cantidad" />
-                                    <field name="precio" />
+                                    <field name="contacto_id"
+                                           attrs="{'column_invisible': [('parent.campos_ocultos','=',False)]}"/>
+                                    <field name="cantidad"/>
+                                    <field name="precio"/>
                                     <field name="importe" readonly="1" force_save="1"/>
                                     <field name="currency_id" invisible="1"/>
                                 </tree>
@@ -109,11 +110,12 @@
                                 <group class="oe_subtotal_footer oe_right" colspan="2">
                                     <field name="base" widget="monetary" options="{'currency_field':'currency_id'}"/>
                                     <field name="impuestos"/>
-                                    <div class="oe_subtotal_footer_separator oe_line_o_td_label" >
+                                    <div class="oe_subtotal_footer_separator oe_line_o_td_label">
                                         <label for="total"/>
                                     </div>
-                                    <field name="total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"
-                                        options="{'currency_field':'currency_id'}"
+                                    <field name="total" nolabel="1" class="oe_subtotal_footer_separator"
+                                           widget="monetary"
+                                           options="{'currency_field':'currency_id'}"
                                     />
                                 </group>
                                 <div class="oe_clear"/>
@@ -140,14 +142,14 @@
         <field name="model">presupuesto</field>
         <field name="arch" type="xml">
             <tree decoration-muted="state == 'cancelado'"
-                decoration-success="state == 'aprobado'"
+                  decoration-success="state == 'aprobado'"
             >
                 <field name="name"/>
                 <field name="num_presupuesto"/>
                 <field name="fch_creacion"/>
                 <field name="total" sum="importe_total"/>
                 <field name="state" widget="badge" decoration-danger="state == 'cancelado'"
-                decoration-success="state == 'aprobado'"/>
+                       decoration-success="state == 'aprobado'"/>
             </tree>
             <!-- decoration-bf: negrita -->
             <!-- decoration-it: cursiva -->
@@ -155,6 +157,40 @@
             <!-- decoration-info: color azul claro -->
             <!-- decoration-success: color gris claro -->
             <!-- decoration-warning: color mostaza -->
+        </field>
+    </record>
+    <record id="view_presupuesto_kanban" model="ir.ui.view">
+        <field name="name">Vista kanban del modelo presupuesto</field>
+        <field name="model">presupuesto</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('presupuesto','image_128',record.id.raw_value)"
+                                     class="o_image_64_contain"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                [<field name="clasificacion"/>]
+                                <div>
+                                    <field name="genero_ids"/>
+                                </div>
+                                <div>
+                                    <field name="total" widget="monetary"
+                                           options="{'currency_field': 'currency_id','field:digits':True}"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 </odoo>

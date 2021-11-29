@@ -4,7 +4,7 @@
     <record id="action_open_presupuesto" model="ir.actions.act_window">
         <field name="name">Presupuesto</field>
         <field name="res_model">presupuesto</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
     <record id="action_open_recurso_cinematografico" model="ir.actions.act_window">
         <field name="name">Recurso cinematografico</field>

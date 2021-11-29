@@ -6,8 +6,15 @@
         <field name="res_model">presupuesto</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="action_open_recurso_cinematografico" model="ir.actions.act_window">
+        <field name="name">Recurso cinematografico</field>
+        <field name="res_model">recurso.cinematografico</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
     <menuitem id="menu_principal" name="Peliculas" />
     <menuitem id="menu_horizontal" name="Mis modelos" parent="menu_principal"/>
     <menuitem id="menu_vertical_presupuesto" name="Presupuesto" parent="menu_horizontal" action="action_open_presupuesto"/>
+    <menuitem id="menu_vertical_presupuesto_cinematografico" name="Recurso Cinematografico" parent="menu_horizontal"
+              action="action_open_recurso_cinematografico"/>
 </odoo>

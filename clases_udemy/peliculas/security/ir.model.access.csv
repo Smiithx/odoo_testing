@@ -9,3 +9,4 @@ acceso_presupuesto_administrador,acceso presupuesto administrador,model_presupue
 acceso_presupuesto_detalle_administrador,acceso presupuesto detalle administrador,model_presupuesto_detalle,group_pelicula_administrador,1,1,1,1
 acceso_recurso_cinematografico_administrador,acceso recurso cinematografico administrador,model_recurso_cinematografico,group_pelicula_administrador,1,1,1,1
 acceso_genero_administrador,acceso genero administrador,model_genero,group_pelicula_administrador,1,1,1,1
+acceso_update_wizard_administrador,acceso update wizard administrador,model_update_wizard,group_pelicula_administrador,1,1,1,1

@@ -11,6 +11,7 @@
                             class="oe_highlight" states="borrador"
                     />
                     <button string="Cancelar" type="object" name="cancelar_presupuesto" states="borrador,aprobado"/>
+                    <button string="Popup" type="action" name="%(action_open_update_wizard)d" states="aprobado" groups="peliculas.group_pelicula_administrador"/>
                     <field name="state" widget="statusbar" statusbar_visible="borrador,aprobado"/>
                 </header>
                 <div class="alert alert-info" role="alert" style="margin-bottom:0px;"

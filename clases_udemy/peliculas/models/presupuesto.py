@@ -10,7 +10,7 @@ from odoo.exceptions import UserError
 
 class Presupuesto(models.Model):
     _name = "presupuesto"
-    _inherit = ["image.mixin"]
+    _inherit = ["image.mixin",'mail.thread','mail.activity.mixin']
 
     @api.depends('detalle_ids')
     def _compute_total(self):

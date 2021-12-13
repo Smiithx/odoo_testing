@@ -5,6 +5,7 @@
     'version': '1.0',
     'depends': [
         'contacts',
+        'mail',
     ],
     'author': 'Andres Gonzalez',
     'category': 'Peliculas',
@@ -19,6 +20,7 @@
         'data/categoria.xml',
         'data/secuencia.xml',
         'wizard/update_wizard_view.xml',
+        'report/reporte_pelicula.xml',
         'views/menu.xml',
         'views/presupuesto.xml',
     ],

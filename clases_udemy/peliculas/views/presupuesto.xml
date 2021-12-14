@@ -17,7 +17,7 @@
                 <div class="alert alert-info" role="alert" style="margin-bottom:0px;"
                      attrs="{'invisible': [('des_clasificacion','=',False)]}"
                 >
-                    <field name="des_clasificacion" readonly="1" force_save="1"></field>
+                    <field name="des_clasificacion" readonly="1" force_save="1"/>
                 </div>
                 <sheet>
                     <widget name="web_ribbon" title="Archivado" bg_color="bg-danger"
